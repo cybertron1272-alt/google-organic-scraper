@@ -1,3 +1,5 @@
+console.log("API KEY:", process.env.SERP_API_KEY ? "OK (exists)" : "NOT SET");
+
 const express = require("express");
 const { getJson } = require("serpapi");
 
