@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8" />
+<title>Google 1. strana – Organic výsledky</title>
+</head>
+<body>
+  <h2>Google Organic Search – 1. strana</h2>
+  <input id="kw" placeholder="Zadej klíčové spojení..." style="width:300px"/>
+  <button onclick="search()">Hledat</button>
+
+  <pre id="out"></pre>
+
+  <button onclick="saveJSON()">Uložit JSON</button>
+  <button onclick="saveCSV()">Uložit CSV</button>
+
+<script>
+let lastData = [];
+
+async function search() {
+  const q = document.getElementById("kw").value;
+  const res = await fetch("/search?q=" + encodeURIComponent(q));
+  const data = await res.json();
+  lastData = data;
+  document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+}
+
+function saveJSON() {
+  const blob = new Blob([JSON.stringify(lastData, null, 2)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "google_results.json";
+  a.click();
+}
+
+function saveCSV() {
+  const rows = lastData.map(r => `${r.position},"${r.title}","${r.link}","${r.snippet}"`);
+  const csv = "position,title,link,snippet\n" + rows.join("\n");
+  const blob = new Blob([csv], {type:"text/csv"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "google_results.csv";
+  a.click();
+}
+</script>
+</body>
+</html>
