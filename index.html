@@ -24,7 +24,23 @@ async function search() {
   const res = await fetch("/search?q=" + encodeURIComponent(q));
   const data = await res.json();
   lastData = data;
-  document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+
+  const container = document.getElementById("out");
+  container.innerHTML = "";
+
+  data.forEach(r => {
+    const div = document.createElement("div");
+    div.style.borderBottom = "1px solid #ddd";
+    div.style.padding = "12px 0";
+
+    div.innerHTML = `
+      <div style="font-size:18px;font-weight:bold;color:#1a0dab">${r.position}. ${r.title}</div>
+      <div style="font-size:14px;color:#006621;margin:4px 0">${r.link}</div>
+      <div style="font-size:15px;color:#333">${r.snippet}</div>
+    `;
+
+    container.appendChild(div);
+  });
 }
 
 function saveJSON() {
