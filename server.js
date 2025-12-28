@@ -1,8 +1,3 @@
-app.use((req, res, next) => {
-  res.setHeader("Content-Type", "application/json; charset=utf-8");
-  next();
-});
-
 const express = require("express");
 const { getJson } = require("serpapi");
 
@@ -10,6 +5,7 @@ const app = express();
 app.use(express.static("."));
 
 app.get("/search", (req, res) => {
+  res.setHeader("Content-Type", "application/json; charset=utf-8"); //smazat kdyžtak
   const q = req.query.q;
   getJson({
     q,
