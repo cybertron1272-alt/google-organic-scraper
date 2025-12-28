@@ -1,4 +1,7 @@
-console.log("API KEY:", process.env.SERP_API_KEY ? "OK (exists)" : "NOT SET");
+app.use((req, res, next) => {
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  next();
+});
 
 const express = require("express");
 const { getJson } = require("serpapi");
