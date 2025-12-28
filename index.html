@@ -7,7 +7,7 @@
 </head>
 <body>
   <h1>Praktický test “mozna.inizio.cz”</h1>
-  <h2>Google Organic Search – 1. strana</h2>
+  <h2>Google Organic Search z 1. strany</h2>
   <input id="kw" placeholder="Zadej klíčové spojení..." style="width:300px"/>
   <button onclick="search()">Hledat</button>
 
@@ -43,7 +43,7 @@ function saveCSV() {
       r.position,
       `"${String(r.title).replace(/"/g,'""')}"`,
       `"${String(r.link).replace(/"/g,'""')}"`,
-      `"${String(r.snippet).replace(/"/g,'""')}"`
+      `"${String(r.snippet).normalize("NFKD").replace(/[^\x00-\x7F\u0100-\u017F]/g, "")}"`
     ].join(","))
   ];
 
