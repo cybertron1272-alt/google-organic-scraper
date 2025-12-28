@@ -50,7 +50,7 @@ function saveCSV() {
     header.join(","),
     ...lastData.map(r => [
       r.position,
-      `"${String(r.title).replace(/"/g,'""')}"`,
+      `"${String(r.title).normalize("NFKD").replace(/[^\x00-\x7F\u0100-\u017F]/g, "")}"`,
       `"${String(r.link).replace(/"/g,'""')}"`,
       `"${String(r.snippet).normalize("NFKD").replace(/[^\x00-\x7F\u0100-\u017F]/g, "")}"`
     ].join(","))
